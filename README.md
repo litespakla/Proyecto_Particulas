@@ -1,1 +1,1 @@
-# Proyecto_Particulas
+# Proyecto final del curso de Partículas Cargadas
