@@ -41,7 +41,7 @@ def getVolume(x, y, z):
   if( pow( y-ybc ,2) + pow( z-zbc ,2) <= pow( rb ,2) ):
     return "Bone"
 
-#Define Muscle in desired units
+#Define Muscle in mm before de *100 multiplier
   rm= 100.00 *100
   ymc= 250.00 *100
   zmc= 150.00 *100
@@ -49,7 +49,7 @@ def getVolume(x, y, z):
   if( pow( y-ymc ,2) + pow( z-zmc ,2) <= pow( rm ,2) ):
     return "Muscle"
 
-#Define Fat in desired units
+#Define Fat in mm before de *100 multiplier
   rf= 105.00 *100
   pyc= 250.00 *100
   pzc= 150.00 *100
@@ -57,7 +57,7 @@ def getVolume(x, y, z):
   if( pow( y-pyc ,2) + pow( z-pzc ,2) <= pow( rf ,2) ):
     return "Fat"
 
-#Define Skin in desired units
+#Define Skin in mm before de *100 multiplier
   rs= 110.00 *100
   ysc= 250.00 *100
   zsc= 150.00 *100
