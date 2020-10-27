@@ -6,7 +6,7 @@ import sys
 import math
 
 
-#Set world size in desired units in mm inside the float parentheses
+#Set world size in mm inside the float parentheses
 
 xWorld= float(500.00)*100
 yWorld= float(500.00)*100
@@ -34,33 +34,33 @@ def getVolume(x, y, z):
     return "Exit"
     
 #Define Bone in mm before de *100 multiplier
-  rb= 30.00 *100
-  ybc= 250.00 *100
-  zbc= 150.00 *100
+  rb= 30.00 *100    #Bone radius
+  ybc= 250.00 *100  #Y cylinder center
+  zbc= 150.00 *100  #Z cylinder center
 #Ask for Bone
   if( pow( y-ybc ,2) + pow( z-zbc ,2) <= pow( rb ,2) ):
     return "Bone"
 
 #Define Muscle in mm before de *100 multiplier
-  rm= 100.00 *100
-  ymc= 250.00 *100
-  zmc= 150.00 *100
+  rm= 100.00 *100   #Muscle radius
+  ymc= 250.00 *100  #Y muscle center
+  zmc= 150.00 *100  #Z muscle center
 #Ask for Muscle
   if( pow( y-ymc ,2) + pow( z-zmc ,2) <= pow( rm ,2) ):
     return "Muscle"
 
 #Define Fat in mm before de *100 multiplier
-  rf= 105.00 *100
-  pyc= 250.00 *100
-  pzc= 150.00 *100
+  rf= 105.00 *100   #Fat radius
+  pyc= 250.00 *100  #Y fat center
+  pzc= 150.00 *100  #Z fat center
 #Ask for Skin
   if( pow( y-pyc ,2) + pow( z-pzc ,2) <= pow( rf ,2) ):
     return "Fat"
 
 #Define Skin in mm before de *100 multiplier
-  rs= 110.00 *100
-  ysc= 250.00 *100
-  zsc= 150.00 *100
+  rs= 110.00 *100   #Skin radius
+  ysc= 250.00 *100  #Y skin center
+  zsc= 150.00 *100  #Z skin center
 #Ask for Skin
   if( pow( y-ysc ,2) + pow( z-zsc ,2) <= pow( rs ,2) ):
     return "Skin"
