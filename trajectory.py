@@ -1,6 +1,6 @@
 #
 #Usage, Just run the trajectory.py with the point and momentum atached after the command.
-#Example: ./trayectory.py x0 y0 z0 px py pz 
+#Example: python trayectory.py x0 y0 z0 px py pz 
 #
 import sys
 import math
