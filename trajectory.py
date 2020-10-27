@@ -79,9 +79,9 @@ zt= pz/norm
 
 #Set Initial Volume and Positions
 
-xa= x0+xt
-ya= y0+yt
-za= z0+zt
+xa= x0
+ya= y0
+za= z0
 xb= x0
 yb= y0
 zb= z0
