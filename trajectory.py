@@ -74,7 +74,7 @@ def getVolume(x, y, z):
   return "Air"
 
 
-#Define trajectory
+#Define Direction
 
 norm= math.sqrt( pow(px, 2) + pow(py, 2) + pow(pz, 2))
 xt= px/norm
@@ -82,7 +82,7 @@ yt= py/norm
 zt= pz/norm
 
 
-#Set Initial Volume and Positions
+#Set Initial Volumes and Positions
 
 xa= x0
 ya= y0
@@ -94,9 +94,9 @@ volume= getVolume(xa, ya, za)
 
 #Set Distance and Points
 
-i= 0
+first= True
 dis= [0,0,0,0,0,0,0,0,0]
-pto= [[x0,y0,z0],
+pto= [[0,0,0],
      [0,0,0],
      [0,0,0],
      [0,0,0],
@@ -108,7 +108,39 @@ pto= [[x0,y0,z0],
      [0,0,0]]
 
 
-#Trayectory
+#Definition to Trayectory
+
+def trayectory(volA,volB):
+
+  if( volA == "Air" and volB != "Exit" ):
+    return 0,1
+  
+  elif( volA == "Skin" and volB == "Fat" ):
+    return 1,2
+  
+  elif( volA == "Fat" and volB == "Muscle" ):
+    return 2,3
+  
+  elif( volA == "Muscle" and volB == "Bone" ):
+    return 3,4
+  
+  elif(volA == "Bone"):
+    return 4,5
+  
+  elif( volA == "Muscle" ):
+    return 5,6
+  
+  elif( volA == "Fat" ):
+    return 6,7
+  
+  elif( volA == "Skin" ):
+    return 7,8
+  
+  elif( volA == "Air" and volB == "Exit" ):
+    return 8,9
+
+
+#Start Path
 
 if pow(xt, 2) >= pow(yt, 2) + pow(zt, 2):
 
@@ -124,11 +156,16 @@ if pow(xt, 2) >= pow(yt, 2) + pow(zt, 2):
         r= math.sqrt( pow(xb-xa ,2) + pow(yb-ya ,2) + pow(zb-za ,2))
         #print(round(r/100, 2), "\t mm in ", volume, " at:\t", round((xb-xt)/100, 2), round((yb-yt)/100, 2), round((zb-zt)/100, 2))
         
-        dis[i]= r
-        pto[i+1][0]= xb-xt 
-        pto[i+1][1]= yb-yt
-        pto[i+1][2]= zb-zt
-        i= i+1
+        n= trayectory(getVolume(xa, ya, za),getVolume(xb, yb, zb))
+        dis[n[0]]= r
+        pto[n[1]][0]= xb-xt 
+        pto[n[1]][1]= yb-yt
+        pto[n[1]][2]= zb-zt
+        if first:
+          pto[n[0]][0]= x0
+          pto[n[0]][1]= y0
+          pto[n[0]][2]= z0
+          first= False
         
         xa= xb
         ya= yb
@@ -151,11 +188,16 @@ if pow(xt, 2) >= pow(yt, 2) + pow(zt, 2):
         r= math.sqrt( pow(xb-xa ,2) + pow(yb-ya ,2) + pow(zb-za ,2))
         #print(round(r/100, 2), "\t mm in ", volume, " at:\t", round((xb-xt)/100, 2), round((yb-yt)/100, 2), round((zb-zt)/100, 2))
         
-        dis[i]= r
-        pto[i+1][0]= xb-xt 
-        pto[i+1][1]= yb-yt
-        pto[i+1][2]= zb-zt
-        i= i+1
+        n= trayectory(getVolume(xa, ya, za),getVolume(xb, yb, zb))
+        dis[n[0]]= r
+        pto[n[1]][0]= xb-xt 
+        pto[n[1]][1]= yb-yt
+        pto[n[1]][2]= zb-zt
+        if first:
+          pto[n[0]][0]= x0
+          pto[n[0]][1]= y0
+          pto[n[0]][2]= z0
+          first= False
         
         xa= xb
         ya= yb
@@ -180,11 +222,16 @@ elif pow(yt, 2) >= pow(xt, 2) + pow(zt, 2):
         r= math.sqrt( pow(xb-xa ,2) + pow(yb-ya ,2) + pow(zb-za ,2))
         #print(round(r/100, 2), "\t mm in ", volume, " at:\t", round((xb-xt)/100, 2), round((yb-yt)/100, 2), round((zb-zt)/100, 2))
         
-        dis[i]= r
-        pto[i+1][0]= xb-xt 
-        pto[i+1][1]= yb-yt
-        pto[i+1][2]= zb-zt
-        i= i+1
+        n= trayectory(getVolume(xa, ya, za),getVolume(xb, yb, zb))
+        dis[n[0]]= r
+        pto[n[1]][0]= xb-xt 
+        pto[n[1]][1]= yb-yt
+        pto[n[1]][2]= zb-zt
+        if first:
+          pto[n[0]][0]= x0
+          pto[n[0]][1]= y0
+          pto[n[0]][2]= z0
+          first= False
         
         xa= xb
         ya= yb
@@ -207,11 +254,16 @@ elif pow(yt, 2) >= pow(xt, 2) + pow(zt, 2):
         r= math.sqrt( pow(xb-xa ,2) + pow(yb-ya ,2) + pow(zb-za ,2))
         #print(round(r/100, 2), "\t mm in ", volume, " at:\t", round((xb-xt)/100, 2), round((yb-yt)/100, 2), round((zb-zt)/100, 2))
         
-        dis[i]= r
-        pto[i+1][0]= xb-xt 
-        pto[i+1][1]= yb-yt
-        pto[i+1][2]= zb-zt
-        i= i+1
+        n= trayectory(getVolume(xa, ya, za),getVolume(xb, yb, zb))
+        dis[n[0]]= r
+        pto[n[1]][0]= xb-xt 
+        pto[n[1]][1]= yb-yt
+        pto[n[1]][2]= zb-zt
+        if first:
+          pto[n[0]][0]= x0
+          pto[n[0]][1]= y0
+          pto[n[0]][2]= z0
+          first= False
         
         xa= xb
         ya= yb
@@ -236,11 +288,16 @@ else:
         r= math.sqrt( pow(xb-xa ,2) + pow(yb-ya ,2) + pow(zb-za ,2))
         #print(round(r/100, 2), "\t mm in ", volume, " at:\t", round((xb-xt)/100, 2), round((yb-yt)/100, 2), round((zb-zt)/100, 2))
         
-        dis[i]= r
-        pto[i+1][0]= xb-xt 
-        pto[i+1][1]= yb-yt
-        pto[i+1][2]= zb-zt
-        i= i+1
+        n= trayectory(getVolume(xa, ya, za),getVolume(xb, yb, zb))
+        dis[n[0]]= r
+        pto[n[1]][0]= xb-xt 
+        pto[n[1]][1]= yb-yt
+        pto[n[1]][2]= zb-zt
+        if first:
+          pto[n[0]][0]= x0
+          pto[n[0]][1]= y0
+          pto[n[0]][2]= z0
+          first= False
         
         xa= xb
         ya= yb
@@ -263,11 +320,16 @@ else:
         r= math.sqrt( pow(xb-xa ,2) + pow(yb-ya ,2) + pow(zb-za ,2))
         #print(round(r/100, 2), "\t mm in ", volume, " at:\t", round((xb-xt)/100, 2), round((yb-yt)/100, 2), round((zb-zt)/100, 2))
         
-        dis[i]= r
-        pto[i+1][0]= xb-xt 
-        pto[i+1][1]= yb-yt
-        pto[i+1][2]= zb-zt
-        i= i+1
+        n= trayectory(getVolume(xa, ya, za),getVolume(xb, yb, zb))
+        dis[n[0]]= r
+        pto[n[1]][0]= xb-xt 
+        pto[n[1]][1]= yb-yt
+        pto[n[1]][2]= zb-zt
+        if first:
+          pto[n[0]][0]= x0
+          pto[n[0]][1]= y0
+          pto[n[0]][2]= z0
+          first= False
         
         xa= xb
         ya= yb
@@ -280,62 +342,16 @@ else:
 
 #Set return Variabels
 
-disf= [0,0,0,0,0,0,0]
-ptof= [[0,0,0],
-      [0,0,0],
-      [0,0,0],
-      [0,0,0],
-      [0,0,0],
-      [0,0,0],
-      [0,0,0],
-      [0,0,0]]
 
-
-#Arrange nubmer on return variables
-
-m=-1
-volume= getVolume(x0, y0, z0)
-
-if volume == "Skin" and i > 5:
-  m= 0
-
-elif volume == "Fat" and i > 5:
-  m= 1
-
-elif volume == "Muscle" and i > 5:
-  m= 2
-
-elif volume == "Bone" :
-  m= 3
-
-elif volume == "Muscle" and i < 5:
-  m= 4
-
-elif volume == "Fat" and i < 5:
-  m= 5
-
-elif volume == "Skin" and i < 5:
-  m= 6
-
-for x in range(0,i-1,1):
-
-  disf[x+m]= round((dis[x])/100, 2)
-  
-  ptof[x+m+1][0]= round((pto[x+1][0])/100, 2)
-  ptof[x+m+1][1]= round((pto[x+1][1])/100, 2)
-  ptof[x+m+1][2]= round((pto[x+1][2])/100, 2)
-
-
-if volume == "Air":
-  ptof[0][0]= round( pto[1][0]/100 ,2) 
-  ptof[0][1]= round( pto[1][1]/100 ,2)
-  ptof[0][2]= round( pto[1][2]/100 ,2)
-
-else:
-
-  ptof[m][0]= round( pto[0][0]/100 ,2) 
-  ptof[m][1]= round( pto[0][1]/100 ,2)
-  ptof[m][2]= round( pto[0][2]/100 ,2)
+disf= [round(dis[1]/100,2),round(dis[2]/100,2),round(dis[3]/100,2),round(dis[4]/100,2),round(dis[5]/100,2),round(dis[6]/100,2),round(dis[7]/100,2)]
+ptof= [[round(pto[1][0]/100,2),round(pto[1][1]/100,2),round(pto[1][2]/100,2)],
+      [round(pto[2][0]/100,2),round(pto[2][1]/100,2),round(pto[2][2]/100,2)],
+      [round(pto[3][0]/100,2),round(pto[3][1]/100,2),round(pto[3][2]/100,2)],
+      [round(pto[4][0]/100,2),round(pto[4][1]/100,2),round(pto[4][2]/100,2)],
+      [round(pto[5][0]/100,2),round(pto[5][1]/100,2),round(pto[5][2]/100,2)],
+      [round(pto[6][0]/100,2),round(pto[6][1]/100,2),round(pto[6][2]/100,2)],
+      [round(pto[7][0]/100,2),round(pto[7][1]/100,2),round(pto[7][2]/100,2)],
+      [round(pto[8][0]/100,2),round(pto[8][1]/100,2),round(pto[8][2]/100,2)]]
 
 
 #Apply return
