@@ -140,7 +140,7 @@ def trayectory(volA,volB):
     return 8,9
 
 
-#Start Path. Here we ask what is the higest coordinate of the momentum, and travel in that dirrection, the idea is to reduce the number of iterations.
+#Start Path. Here we ask what is the higest coordinate of the momentum, and travel in that direction, the idea is to reduce the number of iterations.
 
 if pow(xt, 2) >= pow(yt, 2) + pow(zt, 2):
 
