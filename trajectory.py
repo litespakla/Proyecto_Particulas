@@ -6,26 +6,26 @@ import sys
 import math
 
 
-#Set world size in mm inside the float parentheses
+#Set world size in mm inside the float parentheses. This are the dimensions of the box containing th objects
 
 xWorld= float(230.00)*100/2
 yWorld= float(230.00)*100/2
 zWorld= float(230.00)*100/2
 
 
-#Start Point
+#Start Point. Here the code pulls the initial point from the parameters
 x0= float(sys.argv[1])*100
 y0= float(sys.argv[2])*100
 z0= float(sys.argv[3])*100
 
 
-#Momentum
+#Momentum. Here the code pulls the momentum from the parameters.
 px= float(sys.argv[4])
 py= float(sys.argv[5])
 pz= float(sys.argv[6])
 
 
-#Actual Volume Definition
+#Actual Volume Definition. Here we set the rules to define where is the particle on the space.
 
 def getVolume(x, y, z):
 
@@ -35,11 +35,11 @@ def getVolume(x, y, z):
 
 #Define lenght of arm
   
-  if( z > 105.00 *100 or z < -105.00 *100 ):
+  if( z > 98.77 *100 or z < -98.77 *100 ):
     return "Air"
   
 #Define Bone in mm before de *100 multiplier
-  rb= 30.00 *100    #Bone radius
+  rb= 9.55 *100    #Bone radius
   xbc= 0 *100  #X cylinder center
   ybc= 0 *100  #Y cylinder center
 #Ask for Bone
@@ -47,7 +47,7 @@ def getVolume(x, y, z):
     return "Bone"
 
 #Define Muscle in mm before de *100 multiplier
-  rm= 100.00 *100   #Muscle radius
+  rm= 29.55 *100   #Muscle radius
   xmc= 0 *100  #X muscle center
   ymc= 0 *100  #Y muscle center
 #Ask for Muscle
@@ -55,7 +55,7 @@ def getVolume(x, y, z):
     return "Muscle"
 
 #Define Fat in mm before de *100 multiplier
-  rf= 105.00 *100   #Fat radius
+  rf= 33.05 *100   #Fat radius
   xfc= 0 *100  #X fat center
   yfc= 0 *100  #Y fat center
 #Ask for Fat
@@ -63,7 +63,7 @@ def getVolume(x, y, z):
     return "Fat"
 
 #Define Skin in mm before de *100 multiplier
-  rs= 110.00 *100   #Skin radius
+  rs= 34.05 *100   #Skin radius
   xsc= 0 *100  #X skin center
   ysc= 0 *100  #Y skin center
 #Ask for Skin
@@ -74,7 +74,7 @@ def getVolume(x, y, z):
   return "Air"
 
 
-#Define Direction
+#Define Direction. Here we normaliaze the momentum to assure that each step is equal to 0.01mm.
 
 norm= math.sqrt( pow(px, 2) + pow(py, 2) + pow(pz, 2))
 xt= px/norm
@@ -82,7 +82,7 @@ yt= py/norm
 zt= pz/norm
 
 
-#Set Initial Volumes and Positions
+#Set Initial Volumes and Positions. This are the point that contains the las volumen and the traveling particle.
 
 xa= x0
 ya= y0
@@ -92,7 +92,7 @@ yb= y0
 zb= z0
 volume= getVolume(xa, ya, za)
 
-#Set Distance and Points
+#Set Distance and Points. This are the variables to store the passage of the particle. This one stores air travel.
 
 first= True
 dis= [0,0,0,0,0,0,0,0,0]
@@ -108,7 +108,7 @@ pto= [[0,0,0],
      [0,0,0]]
 
 
-#Definition to Trayectory
+#Definition to Trayectory. This definition is the one that fills the dis, pos vectors and matrix according to the travel of the particle.
 
 def trayectory(volA,volB):
 
@@ -140,43 +140,46 @@ def trayectory(volA,volB):
     return 8,9
 
 
-#Start Path
+#Start Path. Here we ask what is the higest coordinate of the momentum, and travel in that dirrection, the idea is to reduce the number of iterations.
 
 if pow(xt, 2) >= pow(yt, 2) + pow(zt, 2):
 
-  if xt <= 0: #X is desending
-    stay= True
-    while xb>-xWorld-1 and stay:
+  if xt <= 0: #X momentum coordinate is desending
+    stay= True #This indicates that we are not out of the world.
+    while xb>-xWorld-1 and stay: #Keep adding stpes until we get out of world.
       
-      xb= xb + xt
+      xb= xb + xt  #This just add an step on the diferent coordinates.
       yb= yb + yt
       zb= zb + zt
       
-      if volume != getVolume(xb, yb, zb):    
-        r= math.sqrt( pow(xb-xa ,2) + pow(yb-ya ,2) + pow(zb-za ,2))
+      if volume != getVolume(xb, yb, zb):    #Here we ask if the volume is different from the las step.
+        r= math.sqrt( pow(xb-xa ,2) + pow(yb-ya ,2) + pow(zb-za ,2))  #Calculate the distance between the two volumes
         #print(round(r/100, 2), "\t mm in ", volume, " at:\t", round((xb-xt)/100, 2), round((yb-yt)/100, 2), round((zb-zt)/100, 2))
         
-        n= trayectory(getVolume(xa, ya, za),getVolume(xb, yb, zb))
+        n= trayectory(getVolume(xa, ya, za),getVolume(xb, yb, zb)) #We ask where to fill dis and pos
         dis[n[0]]= r
         pto[n[1]][0]= xb-xt 
         pto[n[1]][1]= yb-yt
         pto[n[1]][2]= zb-zt
-        if first:
+        if first: #This runs one time to add the first volume
           pto[n[0]][0]= x0
           pto[n[0]][1]= y0
           pto[n[0]][2]= z0
           first= False
         
-        xa= xb
+        xa= xb #Here we set the new volumen to keep traveling and searching for the next volume
         ya= yb
         za= zb
         volume= getVolume(xb, yb, zb)
-        if volume == "Exit":
+        if volume == "Exit": #Here we end the while 
           stay= False
           #print(volume)
   
+  ###
+  ###All the comments are the same for each coordinate of momentum.
+  ###
   
-  else:  #X is asending
+  else:  #X momentum coordinate is asending
     stay=True
     while xb<xWorld+1 and stay:
       
@@ -210,7 +213,7 @@ if pow(xt, 2) >= pow(yt, 2) + pow(zt, 2):
 
 elif pow(yt, 2) >= pow(xt, 2) + pow(zt, 2):
 
-  if yt <= 0: #Y is desending
+  if yt <= 0: #Y momentum coordinate is desending
     stay= True
     while yb>-yWorld-1 and stay:
       
@@ -242,7 +245,7 @@ elif pow(yt, 2) >= pow(xt, 2) + pow(zt, 2):
           #print(volume)
   
   
-  else:  #Y is asending
+  else:  #Y momentum coordinate is asending
     stay=True
     while yb<yWorld+1 and stay:
       
@@ -276,7 +279,7 @@ elif pow(yt, 2) >= pow(xt, 2) + pow(zt, 2):
           
 else:
 
-  if zt <= 0: #Z is desending
+  if zt <= 0: #Z momentum coordinate is desending
     stay= True
     while zb>-zWorld-1 and stay:
       
@@ -308,7 +311,7 @@ else:
           #print(volume)
   
   
-  else:  #Z is asending
+  else:  #Z momentum coordinate is asending
     stay=True
     while zb<zWorld+1 and stay:
       
@@ -340,7 +343,7 @@ else:
           #print(volume)
 
 
-#Set return Variabels
+#Set return Variabels. We take form dis and pos the values of interest.
 
 
 disf= [round(dis[1]/100,2),round(dis[2]/100,2),round(dis[3]/100,2),round(dis[4]/100,2),round(dis[5]/100,2),round(dis[6]/100,2),round(dis[7]/100,2)]
