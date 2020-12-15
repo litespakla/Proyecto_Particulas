@@ -13,7 +13,7 @@ elseif r2>y && y>r3
     val_x=circulo2([r, r2]);
 elseif r3>y && y>r4
     val_x=circulo3([r, r2, r3]);
-elseif y>r4
+elseif y<r4
     val_x=circulo4([r, r2, r3, r4]);
 else
     val_x=zeros(1,7);
@@ -70,7 +70,7 @@ x7=-x2;
 x3=-sqrt(r2^2-y^2);
 x6=-x3;
 x4=-sqrt(r3^2-y^2);
-x5=-x34
+x5=-x4;
 d(1,1)=abs(x1-x2);
 d(1,2)=abs(x2-x3);
 d(1,3)=abs(x3-x4);
