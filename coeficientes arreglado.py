@@ -8,7 +8,7 @@ Created on Tue Nov 17 11:00:07 2020
 
 
 energia = 10
-
+#Esta función cambia el valor de los coeficientes a partir de la nueva energía
 def changevalue(energia):
     absgrasa = 0
     abspiel = 0
@@ -21,7 +21,8 @@ def changevalue(energia):
     totmusculo = 0
     tothueso = 0
 
-
+#El valor se consigue con una función exponencial, sacada de un ajuste para los diferentes medios
+#Para el caso de estos coeficientes, el ajuste funciona bien para el rango de energía que se esta trabajando
     absgrasa = 2694.39091931*energia**(-2.7519139)
     absmusculo = 3773.19217*energia**(-2.69091704)
     totmusculo = 3774.03737*energia**(-2.68821618)
@@ -31,7 +32,8 @@ def changevalue(energia):
         
 
         
-   
+     #Para el caso de estos otros el ajuste no funciona bien para cierto rango de energías por lo que hay que 
+  #poner una condición para usar los ajustes en el rango correcto
     if energia <= 4:
         abshueso = 3460.14646*energia**(-2.64177814)
         
@@ -45,7 +47,7 @@ def changevalue(energia):
     else:
         tothueso = 12044.1895*energia**(-2.77809405)
         
-        
+          #Una vez sacado los coeficientes se devuelve un vector que contiene el de absorción y el de comptón
     coeficientes = [abspiel,absgrasa,absmusculo,abshueso,totpiel-abspiel,totgrasa-absgrasa,totmusculo-absmusculo,tothueso-abshueso]
     
     print(coeficientes)  
